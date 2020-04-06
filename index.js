@@ -1,6 +1,17 @@
 const dgraph = require("dgraph-js");
 const grpc = require("grpc");
+// Add this to the VERY top of the first file loaded in your app
+const apm = require('elastic-apm-node').start({
+    // Override service name from package.json
+    // Allowed characters: a-z, A-Z, 0-9, -, _, and space
+    serviceName: 'ai-simple-server',
 
+    // Use if APM Server requires a token
+    secretToken: 'changeme',
+
+    // Set custom APM Server URL (default: http://localhost:8200)
+    serverUrl: 'secret',
+})
 var express = require('express');
 
 // Create a client stub.
@@ -133,13 +144,13 @@ async function queryAll(dgraphClient) {
 
 var app = express();
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
+});
 
-  
+
 app.get('/', async function (req, res) {
     const dgraphClientStub = newClientStub();
     const dgraphClient = newClient(dgraphClientStub);
@@ -148,7 +159,7 @@ app.get('/', async function (req, res) {
     await createData(dgraphClient);
     // Close the client stub.
     dgraphClientStub.close();
-    res.send({status: "Done!"});
+    res.send({ status: "Done!" });
 })
 
 
@@ -171,8 +182,8 @@ app.get('/people', async function (req, res) {
 })
 
 var server = app.listen(4000, function () {
-   var host = server.address().address
-   var port = server.address().port
-   
-   console.log("Example app listening at http://%s:%s", host, port)
+    var host = server.address().address
+    var port = server.address().port
+
+    console.log("Example app listening at http://%s:%s", host, port)
 })

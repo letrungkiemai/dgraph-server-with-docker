@@ -5,8 +5,9 @@ A simple nodejs server connected to dgraph
 To spin up:
 
 `docker build -t ai/dgraph-api .`
+`cd client && docker build -t webserver-image:v1 .`
 
-`docker-compose up`
+`cd .. && docker-compose up -d`
 
 Connect:
 

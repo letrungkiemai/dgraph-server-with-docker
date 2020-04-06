@@ -39,6 +39,13 @@ services:
     depends_on:
       - alpha
 
+  web:
+    image: webserver-image:v1
+    ports:
+      - "9090:80"
+    depends_on: 
+      - dgraph_api
+
 networks:
   default:
     driver: bridge
