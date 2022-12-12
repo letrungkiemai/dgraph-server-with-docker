@@ -12,7 +12,7 @@
   "dependencies": {
     "dgraph-js": "^2.1.0",
     "elastic-apm-node": "^3.5.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "grpc": "^1.24.2"
   }
 }
